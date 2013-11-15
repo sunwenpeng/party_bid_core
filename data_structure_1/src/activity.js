@@ -17,3 +17,4 @@ Activity.prototype.active = function(){
 Activity.find_activity = function(activity){
     return _.findWhere(JSON.parse(localStorage.activities),{"name":activity})
 }
+
