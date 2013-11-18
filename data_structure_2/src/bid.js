@@ -50,5 +50,19 @@ bidding.BidPriceResult = function (bid_price_array) {
 }
 
 bidding.bid_sign_up = function(message){
+    if(localStorage.is_bidding == "true"){
+        sign_up.bid_sign_up_check(message)
+    }
+}
 
+bidding.bid_already_check = function(message){
+    var bid_info = render_current_bid_info() ;
+    var bid_already_check = _.some(bid_info,function(ob){return ob.phone == message.phone});
+    if(bid_already_check == true)return;
+    var bid_new = new bidding(message.phone,message.content.substring(2).trim()) ;
+    var activity_new = render_current_activity();
+    bid_info.push(bid_new) ;
+    console.log(bid_info)
+    activity_new.biddings[localStorage.current_bid] = bid_info ;
+    Activity.instead(activity_new) ;
 }

@@ -15,3 +15,8 @@ function render_current_activity(){
     return JSON.parse(localStorage.activities)[localStorage.current_activity_id]   ;
 }
 
+function render_current_bid_info(){
+    return JSON.parse(localStorage.activities)[localStorage.current_activity_id].biddings[localStorage.current_bid]
+}
+
+
