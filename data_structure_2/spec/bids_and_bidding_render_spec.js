@@ -73,8 +73,8 @@ describe("Bids and Bidding Render", function() {
         var bids = transform_bids_to_view_model("1");
 
         expect(bids.length).toBe(2);
-        expect(bids[0].name).toBe("竞价1");
-        expect(bids[1].name).toBe("竞价2");
+        expect(bids[0]).toBe("竞价1");
+        expect(bids[1]).toBe("竞价2");
     });
 
     it("should show minimum not repeatable bidding", function(){

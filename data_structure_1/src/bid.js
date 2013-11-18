@@ -19,7 +19,6 @@ function transform_bids_to_view_model(activity){
 
 bid.get_result_array = function (bidings){
     var success_price = bid.BidPriceResult (bidings) ;
-    console.log(success_price)
     return [_.findWhere(bidings,{"price":success_price})]
 }
 
