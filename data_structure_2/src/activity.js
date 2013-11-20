@@ -1,5 +1,4 @@
 function Activity(activity_name){
-//   this.id = localStorage.activity_id_generator
      this.name = activity_name
      this.sign_ups = []
      this.bids = []
@@ -23,4 +22,12 @@ Activity.instead = function(activity){
     var index = _.indexOf(_.pluck(_.values(activities),"name"),activity.name)
     activities[index] = activity ;
     localStorage.activities = JSON.stringify(activities)
+}
+
+Activity.render_activity = function(activity_name){
+    return  _.findWhere(JSON.parse( localStorage.activities),{"name":activity_name})
+}
+
+Activity.render_current_activity= function(){
+    return JSON.parse(localStorage.activities)[localStorage.current_activity_id]   ;
 }

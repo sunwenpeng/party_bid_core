@@ -33,15 +33,23 @@ bidding.bid_sign_up = function(message){
 }
 
 bidding.bid_already_check = function(message){
-    var bid_info = render_activity_bids(localStorage.current_activity,localStorage.current_bid).biddings ;
+    var bid_info = bid.render_activity_bids(localStorage.current_activity,localStorage.current_bid).biddings ;
     var bid_already_check = _.some(bid_info,function(ob){return ob.phone == message.phone});
     if(bid_already_check == true)return;
     var bid_new = new bidding(message.phone,message.content.substring(2).trim()) ;
     bid_info.push(bid_new) ;
-    var new_bid = render_activity_bids(localStorage.current_activity,localStorage.current_bid) ;
+    var new_bid = bid.render_activity_bids(localStorage.current_activity,localStorage.current_bid) ;
     new_bid.biddings = bid_info ;
     var new_bids = JSON.parse(localStorage.bids) ;
     new_bids = _.map(new_bids,function(ob){if(ob.name == localStorage.current_bid && ob.activity_id == localStorage.current_activity){ob = new_bid;return ob;}else{return ob}})
-    console.log(new_bids)
     localStorage.bids = JSON.stringify(new_bids)
+}
+
+bidding.render_biddings = function(id,bid_name){
+    var bids = bid.render_bids(id) ;
+    var bidding_array = _.findWhere(bids,{"name":bid_name}).biddings  ;
+    var bid_success_price = bidding.BidPriceResult(bidding_array) ;
+    var bid_success_info = _.findWhere(bidding_array,{"price":bid_success_price}) ;
+    bid_success_info.name = _.findWhere(sign_up.render_sign_ups(id),{"phone":bid_success_info.phone}).name
+    return [bid_success_info];
 }

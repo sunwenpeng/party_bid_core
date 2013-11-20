@@ -22,7 +22,7 @@ describe("Bid", function() {
     })
 
     it("should create new bid", function(){
-        create_new_bid("0");
+        bidding.create_new_bid("0");
 
         var activities = JSON.parse(localStorage.activities);
         expect(activities["0"].bids.length).toBe(1);

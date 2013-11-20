@@ -3,7 +3,7 @@ function bid (name,biddings){
     this.biddings = biddings
 }
 
-function create_new_bid(activity){
+bid.create_new_bid = function(activity){
     var activity_find = Activity.find_activity(activity);
     var index = Activity.find_activity(activity).bids.length;
     var new_bid = new bid("竞价"+(index+1).toString(),[]);
@@ -12,10 +12,7 @@ function create_new_bid(activity){
     localStorage.activities = JSON.stringify(new_activities);
 };
 
-function transform_bids_to_view_model(activity){
-    var activity_find = Activity.find_activity(activity);
-    return activity_find.bids
-}
+
 
 bid.get_result_array = function (bidings){
     var success_price = bid.BidPriceResult (bidings) ;
@@ -43,4 +40,21 @@ bid.BidPriceResult = function (bid_price_array) {
         })
         .value()
     return bid_success_price.price
+}
+
+bid.bid_sign_up = function(message){
+    if(localStorage.is_bidding == "true")sign_up.activity_sign_up_check(message)
+}
+
+bid.bid_already_check = function(message,phone,activity,name){
+    var bid_info = _.findWhere(activity.bids,{"name":localStorage.current_bid})
+    var bid_already_check = _.some(bid_info.biddings,function(ob){return ob.phone == phone});
+    if(bid_already_check == false){
+        var bidding_new = new bidding(name,message["messages"][0]["phone"],(message["messages"][0]["message"]).substring(2))
+        bid_info.biddings.push(bidding_new);
+        var new_activity_bids = _.map(activity.bids,function(ob){if(ob.name == localStorage.current_bid){ob = bid_info;return ob;}else{return ob}}) ;
+        activity.bids = new_activity_bids ;
+        var new_activities = _.map(JSON.parse(localStorage.activities),function(ob){if(ob.name == activity.name){ob = activity;return ob;}else{return ob}}) ;
+        localStorage.activities = JSON.stringify(new_activities);
+    }
 }

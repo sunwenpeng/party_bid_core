@@ -21,7 +21,7 @@ describe("Bid", function() {
     })
 
     it("should create new bid", function(){
-        create_new_bid("first activity");
+        bid.create_new_bid("first activity");
 
         var activities = JSON.parse(localStorage.activities);
         expect(activities[0].bids.length).toBe(1);
