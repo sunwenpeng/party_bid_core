@@ -4,5 +4,5 @@ function notify_sms_received(received_message) {
     if(message_front == "BM"){
         return sign_up.activity_sign_up(message)
     }
-    bidding.bid_sign_up(message)
+    if(message_front == "JJ")bidding.bid_sign_up(message)
 }
